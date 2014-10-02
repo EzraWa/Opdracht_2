@@ -87,7 +87,6 @@ public class Datastuctures_Opdracht2 {
             aantalKlassen = aantalKlassen + 4;
             return aantalPerKlas(studentenPerRichting);
         }
-        System.out.println("sdgsagsasa");
     }
 
     public static ArrayList insertion(ArrayList students) {
