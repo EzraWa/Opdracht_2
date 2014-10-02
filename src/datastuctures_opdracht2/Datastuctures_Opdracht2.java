@@ -106,7 +106,7 @@ public class Datastuctures_Opdracht2 {
         } 
         
         ArrayList<Student> student = new ArrayList<Student>(Arrays.asList(studentArray));
-
+        System.out.println("shizzle");
         return student;
     }
 }
