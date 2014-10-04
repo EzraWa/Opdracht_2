@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package datastuctures_opdracht2;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -13,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Random;
-import model.Student;
+import model.*;
 
 /**
  *
@@ -24,13 +18,10 @@ import model.Student;
 public class Datastuctures_Opdracht2 {
 
     private static int aantalKlassen = 4;
-    private static int aantalStudenten = 1600;
+    private static int aantalStudenten = 400;
 
-    private static String[] richting = {"IS", "IT", "IB", "GD"};
+    private static String[] richting = {"IS", "IT", "IN", "IG"};
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
         ArrayList<Student> students = new ArrayList<>();
@@ -47,7 +38,7 @@ public class Datastuctures_Opdracht2 {
             klassen.add(richting[2] + "_20" + (i + 1));
             klassen.add(richting[3] + "_20" + (i + 1));
         }
-        System.out.println(klassen.toString());
+//        System.out.println(klassen.toString());
 
         int j = 0;
 
@@ -72,11 +63,14 @@ public class Datastuctures_Opdracht2 {
         }
 
         Collections.shuffle(students);
-        students = insertion(students);
+        
+//        students = insertion(students);
+        students = bucket(students);
 
         students.stream().forEach((student) -> {
             System.out.println(" | Student number:  " + student.getStudentNummer() + " Student group: " + student.getKlas() + " Student grade: " + student.getCijfer() + " | ");
         });
+
     }
 
     public static int aantalPerKlas(int studentenPerRichting) {
@@ -93,7 +87,7 @@ public class Datastuctures_Opdracht2 {
 
         Student[] studentArray = new Student[students.size()];
         studentArray = (Student[]) students.toArray(studentArray);
-        
+
         int n = students.size();
         for (int unsorted = 1; unsorted < n; ++unsorted) {
             Comparable nextItem = studentArray[unsorted];
@@ -103,9 +97,76 @@ public class Datastuctures_Opdracht2 {
                 loc--;
             }
             studentArray[loc] = (Student) nextItem;
-        } 
-        
+        }
+
         ArrayList<Student> student = new ArrayList<Student>(Arrays.asList(studentArray));
         return student;
+    }
+
+    public static ArrayList bucket(ArrayList students) {
+        Student[] studentArray = new Student[students.size()];
+        studentArray = (Student[]) students.toArray(studentArray);
+
+        ArrayList<Klas> klassen = new ArrayList<Klas>();
+
+        for (Student student : studentArray) {
+            
+            if (klassen.isEmpty()) {
+                Klas newKlas = new Klas();
+                newKlas.setNaam(student.getKlas());
+                newKlas.addStudent((Student) student);
+                klassen.add(newKlas);
+            } else {
+                boolean zitErin = false;
+                boolean appel = false;
+                int index = -1;
+
+                for (int j = 0; j < klassen.size(); j++) {
+                    if (klassen.get(j).getNaam().equals(student.getKlas())) {
+
+                        boolean kiwi = false;
+                        int indx = -1;
+                        for (int k = 0; k < klassen.get(j).getSize(); k++) {
+                            Student[] studentInKlas = new Student[students.size()];
+                            studentInKlas = (Student[]) klassen.get(j).getStudents().toArray(studentArray);                           
+
+                            if ((student.getStudentNummer() < studentInKlas[k].getStudentNummer()) && (kiwi == false)) {
+                                indx = k;
+                                kiwi = true;
+                            }
+                        }
+
+                        if(indx == -1){
+                            klassen.get(j).addStudent((Student) student);
+                        } else{
+                            klassen.get(j).addStudent(indx, (Student) student);
+                        }
+                        zitErin = true;
+                    }
+                    if ((appel == false) && (student.getKlas().compareTo(klassen.get(j).getNaam()) < 0)) {
+                        index = j;
+                        appel = true;
+                    }
+                }
+                if (!zitErin) {
+                    Klas newKlas = new Klas();
+                    newKlas.setNaam(student.getKlas());
+                    newKlas.addStudent((Student) student);
+
+                    if (index == -1) {
+                        klassen.add(newKlas);
+                    } else {
+                        klassen.add(index, newKlas);
+                    }
+                }
+            }
+        }
+        ArrayList<Student> outputArray = new ArrayList<Student>();
+        for (int u = 0; u < klassen.size(); u++) {
+            for (int y = 0; y < klassen.get(u).getStudents().size(); y++) {
+                outputArray.add((Student) klassen.get(u).getStudents().get(y));
+            }
+        }
+        return outputArray;
     }
 }
