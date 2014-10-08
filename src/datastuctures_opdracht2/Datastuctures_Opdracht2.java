@@ -18,7 +18,7 @@ import model.*;
 public class Datastuctures_Opdracht2 {
 
     private static int aantalKlassen = 4;
-    private static int aantalStudenten = 400;
+    private static int aantalStudenten = 3200;
 
     private static String[] richting = {"IS", "IT", "IN", "IG"};
 
@@ -64,8 +64,8 @@ public class Datastuctures_Opdracht2 {
 
         Collections.shuffle(students);
         
-//        students = insertion(students);
-        students = bucket(students);
+        students = insertion(students);
+//        students = bucket(students);
 
         students.stream().forEach((student) -> {
             System.out.println(" | Student number:  " + student.getStudentNummer() + " Student group: " + student.getKlas() + " Student grade: " + student.getCijfer() + " | ");
@@ -84,7 +84,7 @@ public class Datastuctures_Opdracht2 {
     }
 
     public static ArrayList insertion(ArrayList students) {
-
+        double t1 = System.nanoTime();
         Student[] studentArray = new Student[students.size()];
         studentArray = (Student[]) students.toArray(studentArray);
 
@@ -100,10 +100,13 @@ public class Datastuctures_Opdracht2 {
         }
 
         ArrayList<Student> student = new ArrayList<Student>(Arrays.asList(studentArray));
+        double t2 = System.nanoTime();
+        System.out.println("Tijd: " + (t2-t1) / 1000000000);
         return student;
     }
 
     public static ArrayList bucket(ArrayList students) {
+        double t1 = System.nanoTime();
         Student[] studentArray = new Student[students.size()];
         studentArray = (Student[]) students.toArray(studentArray);
 
@@ -167,6 +170,8 @@ public class Datastuctures_Opdracht2 {
                 outputArray.add((Student) klassen.get(u).getStudents().get(y));
             }
         }
-        return outputArray;
+        double t2 = System.nanoTime();
+        System.out.println("Tijd: " + (t2-t1) / 1000000000);
+        return outputArray; 
     }
 }
