@@ -17,8 +17,7 @@ import model.*;
  */
 public class Datastuctures_Opdracht2 {
 
-    private static int aantalKlassen = 4;
-    private static int aantalStudenten = 3200;
+    private static final int aantalStudenten = 1600;
 
     private static String[] richting = {"IS", "IT", "IN", "IG"};
 
@@ -28,10 +27,11 @@ public class Datastuctures_Opdracht2 {
         ArrayList<String> klassen = new ArrayList<>();
         Random r = new Random();
 
+        int aantalKlassen = 4;
         int studentenPerRichting = aantalStudenten / 4;
-        int studentenPerKlas = aantalPerKlas(studentenPerRichting);
+        aantalKlassen = aantalPerKlas(studentenPerRichting, aantalKlassen);
 
-//        String[] klassen = new String[aantalKlassen];
+
         for (int i = 0; i < aantalKlassen / 4; i++) {
             klassen.add(richting[0] + "_20" + (i + 1));
             klassen.add(richting[1] + "_20" + (i + 1));
@@ -73,13 +73,13 @@ public class Datastuctures_Opdracht2 {
 
     }
 
-    public static int aantalPerKlas(int studentenPerRichting) {
+    public static int aantalPerKlas(int studentenPerRichting, int aantalKlassen) {
         if (studentenPerRichting < 33) {
-            return studentenPerRichting;
+            return aantalKlassen;
         } else {
             studentenPerRichting = studentenPerRichting / 2;
             aantalKlassen = aantalKlassen + 4;
-            return aantalPerKlas(studentenPerRichting);
+            return aantalPerKlas(studentenPerRichting, aantalKlassen);
         }
     }
 
