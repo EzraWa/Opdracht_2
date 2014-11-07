@@ -121,21 +121,21 @@ public class Datastuctures_Opdracht2 {
                 klassen.add(newKlas);
             } else {
                 boolean zitErin = false;
-                boolean appel = false;
+                boolean placeFoundInKlassenArray = false;
                 int index = -1;
 
                 for (int j = 0; j < klassen.size(); j++) {
                     if (klassen.get(j).getNaam().equals(student.getKlas())) {
 
-                        boolean kiwi = false;
+                        boolean placeFoundInClass = false;
                         int indx = -1;
                         for (int k = 0; k < klassen.get(j).getSize(); k++) {
                             Student[] studentInKlas = new Student[students.size()];
                             studentInKlas = (Student[]) klassen.get(j).getStudents().toArray(studentArray);                           
 
-                            if ((student.getStudentNummer() < studentInKlas[k].getStudentNummer()) && (kiwi == false)) {
+                            if ((student.getStudentNummer() < studentInKlas[k].getStudentNummer()) && (placeFoundInClass == false)) {
                                 indx = k;
-                                kiwi = true;
+                                placeFoundInClass = true;
                             }
                         }
 
@@ -146,9 +146,9 @@ public class Datastuctures_Opdracht2 {
                         }
                         zitErin = true;
                     }
-                    if ((appel == false) && (student.getKlas().compareTo(klassen.get(j).getNaam()) < 0)) {
+                    if ((placeFoundInKlassenArray == false) && (student.getKlas().compareTo(klassen.get(j).getNaam()) < 0)) {
                         index = j;
-                        appel = true;
+                        placeFoundInKlassenArray = true;
                     }
                 }
                 if (!zitErin) {
