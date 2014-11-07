@@ -85,21 +85,21 @@ public class Datastuctures_Opdracht2 {
 
     public static ArrayList insertion(ArrayList students) {
         double t1 = System.nanoTime();
-        Student[] studentArray = new Student[students.size()];
-        studentArray = (Student[]) students.toArray(studentArray);
+        Student[] studenten = new Student[students.size()];
+        studenten = (Student[]) students.toArray(studenten);
 
         int n = students.size();
-        for (int unsorted = 1; unsorted < n; ++unsorted) {
-            Comparable nextItem = studentArray[unsorted];
-            int loc = unsorted;
-            while ((loc > 0) && (studentArray[loc - 1].compareTo((Student) nextItem) > 0)) {
-                studentArray[loc] = studentArray[loc - 1];
-                loc--;
+        for (int i = 1; i < n; ++i) {
+            Comparable nextItem = studenten[i];
+            int index = i;
+            while ((index > 0) && (studenten[index - 1].compareTo((Student) nextItem) > 0)) {
+                studenten[index] = studenten[index - 1];
+                index--;
             }
-            studentArray[loc] = (Student) nextItem;
+            studenten[index] = (Student) nextItem;
         }
 
-        ArrayList<Student> student = new ArrayList<Student>(Arrays.asList(studentArray));
+        ArrayList<Student> student = new ArrayList<Student>(Arrays.asList(studenten));
         double t2 = System.nanoTime();
         System.out.println("Tijd: " + (t2-t1) / 1000000000);
         return student;
